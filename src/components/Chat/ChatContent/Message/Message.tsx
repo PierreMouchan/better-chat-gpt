@@ -1,7 +1,7 @@
 import React from 'react';
 import useStore from '@store/store';
 
-import Avatar from './Avatar';
+import Avatar, { AVATARS_COLORS } from './Avatar';
 import MessageContent from './MessageContent';
 
 import { Role } from '@type/chat';
@@ -35,18 +35,23 @@ const Message = React.memo(
         }`}
       >
         <div
-          className={`text-base gap-4 md:gap-6 m-auto p-4 md:py-6 flex transition-all ease-in-out ${
+          className={`text-sm gap-4 md:gap-6 m-auto p-4 md:py-6 flex transition-all ease-in-out ${
             hideSideMenu
               ? 'md:max-w-5xl lg:max-w-5xl xl:max-w-6xl'
               : 'md:max-w-3xl lg:max-w-3xl xl:max-w-4xl'
           }`}
         >
           <Avatar role={role} />
-          <div className='w-[calc(100%-50px)] '>
+          <div className='w-full'>
             <RoleSelector
               role={role}
               messageIndex={messageIndex}
               sticky={sticky}
+              className={`${role === 'user' && '!bg-chat-user/5'}
+              ${role === 'assistant' && '!bg-chat-assistant/5'}
+              ${role === 'system' && '!bg-chat-system/5'}
+              md:!bg-black/10
+              `}
             />
             <MessageContent
               role={role}

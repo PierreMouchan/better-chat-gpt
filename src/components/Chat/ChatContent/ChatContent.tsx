@@ -92,7 +92,7 @@ const ChatContent = () => {
               </div>
             </div>
           )}
-          <div className='mt-4 flex gap-4 flex-wrap justify-center'>
+          <div className='hidden lg:visible my-4 lg:flex gap-4 flex-wrap justify-center'>
             {useStore.getState().generating || (
               <>
                 <DownloadChat saveRef={saveRef} />
@@ -101,7 +101,6 @@ const ChatContent = () => {
               </>
             )}
           </div>
-          <div className='w-full h-36'></div>
         </div>
       </ScrollToBottom>
     </div>

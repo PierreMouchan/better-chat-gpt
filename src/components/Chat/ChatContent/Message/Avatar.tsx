@@ -3,9 +3,15 @@ import { Role } from '@type/chat';
 import SettingIcon from '@icon/SettingIcon';
 import PersonIcon from '@icon/PersonIcon';
 
+export const AVATARS_COLORS = {
+  user: '#C84646',
+  assistant: '#10A37F',
+  system: '#7EA3E3'
+}
+
 const Avatar = React.memo(({ role }: { role: Role }) => {
   return (
-    <div className='w-[30px] flex flex-col relative items-end'>
+    <div className={'w-[30px] hidden lg:flex flex-col relative items-end'}>
       {role === 'user' && <UserAvatar />}
       {role === 'assistant' && <AssistantAvatar />}
       {role === 'system' && <SystemAvatar />}
@@ -17,7 +23,7 @@ const UserAvatar = () => {
   return (
     <div
       className='relative h-[30px] w-[30px] p-1 rounded-sm text-white flex items-center justify-center'
-      style={{ backgroundColor: 'rgb(200, 70, 70)' }}
+      style={{ backgroundColor: AVATARS_COLORS.user }}
     >
       <PersonIcon />
     </div>
@@ -28,7 +34,7 @@ const AssistantAvatar = () => {
   return (
     <div
       className='relative h-[30px] w-[30px] p-1 rounded-sm text-white flex items-center justify-center'
-      style={{ backgroundColor: 'rgb(16, 163, 127)' }}
+      style={{ backgroundColor: AVATARS_COLORS.assistant }}
     >
       <svg
         width='41'
@@ -52,7 +58,7 @@ const SystemAvatar = () => {
   return (
     <div
       className='relative h-[30px] w-[30px] p-1 rounded-sm text-white flex items-center justify-center'
-      style={{ backgroundColor: 'rgb(126, 163, 227)' }}
+      style={{ backgroundColor: AVATARS_COLORS.system }}
     >
       <SettingIcon />
     </div>

@@ -60,6 +60,11 @@ module.exports = {
           850: '#2A2B32',
           900: '#202123',
         },
+        chat:{
+          user: '#C84646',
+          assistant: '#10A37F',
+          system: '#7EA3E3'
+        }
       },
     },
   },
