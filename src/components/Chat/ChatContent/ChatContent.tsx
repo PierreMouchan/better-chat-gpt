@@ -92,7 +92,7 @@ const ChatContent = () => {
               </div>
             </div>
           )}
-          <div className='hidden lg:visible my-4 lg:flex gap-4 flex-wrap justify-center'>
+          <div className='hidden lg:visible mt-4 mb-8 lg:flex gap-4 flex-wrap justify-center'>
             {useStore.getState().generating || (
               <>
                 <DownloadChat saveRef={saveRef} />
