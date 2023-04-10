@@ -484,7 +484,7 @@ const EditViewButtons = React.memo(
 
     return (
       <div className='flex'>
-        <div className='flex-1 text-center mt-2 flex justify-center'>
+        <div className='flex-1 text-center my-3 flex justify-center'>
           {sticky && (
             <button
               className='btn relative mr-2 btn-primary'
