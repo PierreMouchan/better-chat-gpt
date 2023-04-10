@@ -10,10 +10,12 @@ const RoleSelector = React.memo(
     role,
     messageIndex,
     sticky,
+    className
   }: {
     role: Role;
     messageIndex: number;
     sticky?: boolean;
+    className?: string;
   }) => {
     const { t } = useTranslation();
     const setInputRole = useStore((state) => state.setInputRole);
@@ -47,7 +49,7 @@ const RoleSelector = React.memo(
     return (
       <div className='prose dark:prose-invert relative'>
         <button
-          className='btn btn-neutral btn-small flex gap-1'
+          className={`btn btn-neutral btn-small flex gap-1 ${className}`}
           type='button'
           onClick={() => setDropDown((prev) => !prev)}
         >
