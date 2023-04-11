@@ -1,8 +1,7 @@
-const CACHE_NAME = 'my-pwa-cache-v1.0.5';
+const CACHE_NAME = 'my-pwa-cache-v1.0.6';
 const urlsToCache = [
   '/',
-  '/index.html',
-  '/src/main.tsx',
+  '/index.html'
 ];
 
 self.addEventListener('install', (event) => {
