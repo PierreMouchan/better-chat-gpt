@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import useStore from '@store/store';
+import useStore, { StoreState } from '@store/store';
 import i18n from './i18n';
+
 
 import Chat from '@components/Chat';
 import Menu from '@components/Menu';
@@ -9,6 +10,39 @@ import useInitialiseNewChat from '@hooks/useInitialiseNewChat';
 import { ChatInterface } from '@type/chat';
 import { Theme } from '@type/theme';
 import ApiPopup from '@components/ApiPopup';
+import { DATABASE_ENDPOINT } from '@utils/api';
+
+
+export async function syncingWithDb(){
+  const apiKey = useStore.getState().apiKey;
+  if (apiKey) {
+    try {
+      // fetch history from server
+      const response = await fetch(`${DATABASE_ENDPOINT}/better-chat-gpt/${apiKey.slice(0, 5) + apiKey.slice(-5)}`, {
+        method: 'GET',
+      })
+      const data = await response.json() as {settings?: { state: StoreState }, message?: string};
+      if(!data.settings){
+        throw new Error(data.message);
+      }
+
+      // re-setting the apiKey back to the real one
+      data.settings.state.apiKey = apiKey;
+
+
+      // if the settings are different from the local storage, update the local storage and reload the page
+      const currentSettings = JSON.parse(localStorage.getItem('free-chat-gpt')!) as { state: StoreState };
+
+      if(currentSettings.state.cacheId !== data.settings.state.cacheId){
+        alert('Settings synced with server. Page will reload to apply the changes and restore the chats.');
+        localStorage.setItem('free-chat-gpt', JSON.stringify(data.settings));
+        window.location.reload()
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 
 function App() {
   const initialiseNewChat = useInitialiseNewChat();
@@ -40,51 +74,34 @@ function App() {
   },[])
 
   useEffect(() => {
-    // legacy local storage
-    const oldChats = localStorage.getItem('chats');
-    const apiKey = localStorage.getItem('apiKey');
-    const theme = localStorage.getItem('theme');
+    async function getChatGPTSettings(){
 
-    if (apiKey) {
-      // legacy local storage
-      setApiKey(apiKey);
-      localStorage.removeItem('apiKey');
-    }
+      syncingWithDb();
 
-    if (theme) {
-      // legacy local storage
-      setTheme(theme as Theme);
-      localStorage.removeItem('theme');
-    }
-
-    if (oldChats) {
-      // legacy local storage
-      try {
-        const chats: ChatInterface[] = JSON.parse(oldChats);
-        if (chats.length > 0) {
-          setChats(chats);
-          setCurrentChatIndex(0);
-        } else {
-          initialiseNewChat();
-        }
-      } catch (e: unknown) {
-        console.log(e);
-        initialiseNewChat();
-      }
-      localStorage.removeItem('chats');
-    } else {
-      // existing local storage
       const chats = useStore.getState().chats;
       const currentChatIndex = useStore.getState().currentChatIndex;
-      if (!chats || chats.length === 0) {
-        initialiseNewChat();
-      }
-      if (
-        chats &&
-        !(currentChatIndex >= 0 && currentChatIndex < chats.length)
-      ) {
-        setCurrentChatIndex(0);
-      }
+        if (!chats || chats.length === 0) {
+          initialiseNewChat();
+        }
+        if (
+          chats &&
+          !(currentChatIndex >= 0 && currentChatIndex < chats.length)
+        ) {
+          setCurrentChatIndex(0);
+        }
+
+    }
+    getChatGPTSettings()
+
+    function focusSync(){
+      console.log('sync');
+        syncingWithDb();
+    }
+
+    window.addEventListener('focus', focusSync)
+
+    return () => {
+      window.removeEventListener('focus', focusSync)
     }
   }, []);
 

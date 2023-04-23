@@ -140,4 +140,5 @@ export interface LocalStorageInterfaceV7oV8
   foldersName: string[];
   foldersExpanded: boolean[];
   folders: FolderCollection;
+  cacheId: string
 }

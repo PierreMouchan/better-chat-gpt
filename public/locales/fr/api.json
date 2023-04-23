@@ -1,5 +1,5 @@
 {
-  "securityMessage": "Nous accordons la priorité à la sécurité de votre clé API et la traitons avec le plus grand soin. Votre clé est exclusivement stockée sur votre navigateur et jamais partagée avec une entité tierce. Elle est utilisée uniquement dans le but prévu d'accéder à l'API OpenAI et non pour toute autre utilisation non autorisée.",
+  "securityMessage": "Nous accordons la priorité à la sécurité de votre clé API et la traitons avec le plus grand soin. Votre clé est exclusivement stockée sur votre navigateur et jamais partagée avec une entité tierce. Elle est utilisée uniquement dans le but prévu d'accéder à l'API OpenAI et non pour toute autre utilisation non autorisée. Notez que nous synchronisons tous vos messages dans une base de données privée pour la synchronisation des données entre appareils. Utilisez ce produit avec prudence et seulement si vous connaissez le propriétaire et savez ce que vous faites.",
   "apiEndpoint": {
     "inputLabel": "Point d'accès de l'API",
     "description": "Lorsque vous choisissez un point d'accès de l'API non officiel, il fonctionne essentiellement comme un proxy. Un proxy agit en tant qu'intermédiaire entre votre appareil et le serveur de destination, dans ce cas-ci, l'API OpenAI. Ce faisant, il vous permet d'accéder à l'API OpenAI dans des régions où cela pourrait être autrement restreint.",

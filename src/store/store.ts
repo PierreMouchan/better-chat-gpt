@@ -63,7 +63,9 @@ const useStore = create<StoreState>()(
         hideSideMenu: state.hideSideMenu,
         folders: state.folders,
         enterToSubmit: state.enterToSubmit,
+        cacheId: state.cacheId,
       }),
+
       version: 8,
       migrate: (persistedState, version) => {
         switch (version) {

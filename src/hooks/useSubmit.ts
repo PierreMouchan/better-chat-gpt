@@ -7,6 +7,7 @@ import { parseEventSource } from '@api/helper';
 import { limitMessageTokens } from '@utils/messageUtils';
 import { _defaultChatConfig } from '@constants/chat';
 import { officialAPIEndpoint } from '@constants/auth';
+import { DATABASE_ENDPOINT } from '@utils/api';
 
 const useSubmit = () => {
   const { t, i18n } = useTranslation('api');
@@ -170,6 +171,22 @@ const useSubmit = () => {
         updatedChats[currentChatIndex].titleSet = true;
         setChats(updatedChats);
       }
+
+
+      const settings = JSON.parse(window.localStorage.getItem('free-chat-gpt')!);
+      const newCacheId = JSON.stringify(settings).length
+      settings.state.cacheId = newCacheId
+      useStore.getState().setCacheId(newCacheId)
+
+
+      // update chat settings inside db
+      await fetch(`${DATABASE_ENDPOINT}/better-chat-gpt/${apiKey!.slice(0, 5) + apiKey!.slice(-5)}`, {
+        method: "POST",
+        body: JSON.stringify({ settings }),
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
     } catch (e: unknown) {
       const err = (e as Error).message;
       console.log(err);

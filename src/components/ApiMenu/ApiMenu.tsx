@@ -27,7 +27,7 @@ const ApiMenu = ({
   const handleSave = () => {
     setApiKey(_apiKey);
     setApiEndpoint(_apiEndpoint);
-    setIsModalOpen(false);
+    window.location.reload()
   };
 
   const handleToggleCustomEndpoint = () => {

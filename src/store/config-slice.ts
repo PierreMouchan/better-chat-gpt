@@ -20,6 +20,8 @@ export interface ConfigSlice {
   setHideMenuOptions: (hideMenuOptions: boolean) => void;
   setHideSideMenu: (hideSideMenu: boolean) => void;
   setEnterToSubmit: (enterToSubmit: boolean) => void;
+  setCacheId: (cacheId: number) => void;
+  cacheId: number;
 }
 
 export const createConfigSlice: StoreSlice<ConfigSlice> = (set, get) => ({
@@ -31,6 +33,7 @@ export const createConfigSlice: StoreSlice<ConfigSlice> = (set, get) => ({
   enterToSubmit: true,
   defaultChatConfig: _defaultChatConfig,
   defaultSystemMessage: _defaultSystemMessage,
+  cacheId: 0,
   setOpenConfig: (openConfig: boolean) => {
     set((prev: ConfigSlice) => ({
       ...prev,
@@ -79,4 +82,10 @@ export const createConfigSlice: StoreSlice<ConfigSlice> = (set, get) => ({
       enterToSubmit: enterToSubmit,
     }));
   },
+  setCacheId: (cacheId: number) => {
+    set((prev: ConfigSlice) => ({
+      ...prev,
+      cacheId: cacheId,
+    }));
+  }
 });
