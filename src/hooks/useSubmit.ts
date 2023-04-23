@@ -185,7 +185,6 @@ const useSubmit = () => {
         body: JSON.stringify({ settings }),
         headers: {
           "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': 'no-cors',
         }
       })
     } catch (e: unknown) {
