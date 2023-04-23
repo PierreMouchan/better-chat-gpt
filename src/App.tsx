@@ -20,6 +20,9 @@ export async function syncingWithDb(){
       // fetch history from server
       const response = await fetch(`${DATABASE_ENDPOINT}/better-chat-gpt/${apiKey.slice(0, 5) + apiKey.slice(-5)}`, {
         method: 'GET',
+        headers: {
+          'Access-Control-Allow-Origin': 'no-cors',
+        }
       })
       const data = await response.json() as {settings?: { state: StoreState }, message?: string};
       if(!data.settings){
