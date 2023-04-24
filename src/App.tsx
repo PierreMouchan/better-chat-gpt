@@ -12,6 +12,24 @@ import { Theme } from '@type/theme';
 import ApiPopup from '@components/ApiPopup';
 import { DATABASE_ENDPOINT } from '@utils/api';
 
+export async function sendingSettingsToDb(){
+  const apiKey = useStore.getState().apiKey!
+  const settings = JSON.parse(window.localStorage.getItem('free-chat-gpt')!);
+  const newCacheId = ++settings.state.cacheId;
+  settings.state.cacheId = newCacheId
+  useStore.getState().setCacheId(newCacheId)
+
+
+  // update chat settings inside db
+  await fetch(`${DATABASE_ENDPOINT}/better-chat-gpt/${apiKey.slice(0, 5) + apiKey.slice(-5)}`, {
+    method: "POST",
+    body: JSON.stringify({ settings }),
+    headers: {
+      "Content-Type": "application/json",
+    }
+  })
+}
+
 
 export async function syncingWithDb(){
   const apiKey = useStore.getState().apiKey;
@@ -33,8 +51,8 @@ export async function syncingWithDb(){
       // if the settings are different from the local storage, update the local storage and reload the page
       const currentSettings = JSON.parse(localStorage.getItem('free-chat-gpt')!) as { state: StoreState };
 
-      if(currentSettings.state.cacheId !== data.settings.state.cacheId){
-        alert('Settings synced with server. Page will reload to apply the changes and restore the chats.');
+      if(currentSettings.state.cacheId < data.settings.state.cacheId){
+        alert('Settings will be synced with the server. Page will reload...');
         localStorage.setItem('free-chat-gpt', JSON.stringify(data.settings));
         window.location.reload()
       }
